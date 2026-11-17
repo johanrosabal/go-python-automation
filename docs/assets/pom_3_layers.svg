@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" width="100%" height="auto" font-family="'Inter', 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="layer1Grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="layer2Grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="layer3Grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#c084fc" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="testGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.06"/>
+    </linearGradient>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="680" rx="16" fill="url(#bgGrad)" stroke="#26334d" stroke-width="2"/>
+
+  <!-- Header Title -->
+  <text x="36" y="44" fill="#f8fafc" font-size="21" font-weight="800">Arquitectura Estándar de un Page Object — Modelo Granular de 3 Capas</text>
+  <text x="36" y="68" fill="#94a3b8" font-size="13">Flujo de responsabilidad desde la declaración del localizador hasta la orquestación en el Test Case</text>
+
+  <!-- Outer Page Object Container -->
+  <rect x="30" y="90" width="700" height="560" rx="14" fill="#131c2e" stroke="#334155" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <rect x="48" y="78" width="310" height="24" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="60" y="94" fill="#38bdf8" font-size="12" font-weight="700" font-family="monospace">class CheckoutPage(BasePage):</text>
+
+  <!-- ================================================================= -->
+  <!-- CAPA 1: IDENTIDAD, COMPONENTES Y LOCALIZADORES -->
+  <!-- ================================================================= -->
+  <rect x="50" y="114" width="660" height="162" rx="12" fill="url(#layer1Grad)" stroke="#38bdf8" stroke-width="1.8"/>
+  <rect x="66" y="126" width="38" height="22" rx="5" fill="#38bdf8"/>
+  <text x="72" y="141" fill="#090d16" font-size="11" font-weight="800">C1</text>
+  <text x="114" y="142" fill="#f1f5f9" font-size="15" font-weight="800">CAPA 1 — Identidad de Página, Componentes y Localizadores (find_by)</text>
+  <text x="66" y="162" fill="#94a3b8" font-size="12">Define rutas, elementos ancla (anchor=True), prefijos semánticos, plantillas dinámicas y widgets.</text>
+
+  <!-- Capa 1 Code Pills -->
+  <rect x="66" y="174" width="305" height="40" rx="7" fill="#090d16" stroke="#1e3a5f"/>
+  <text x="78" y="191" fill="#7dd3fc" font-size="11.5" font-family="monospace">PAGE_PATH = <tspan fill="#ce9178">"/checkout.html"</tspan></text>
+  <text x="78" y="207" fill="#7dd3fc" font-size="11.5" font-family="monospace">sidebar   = <tspan fill="#dcdcaa">component</tspan>(<tspan fill="#4ec9b0">SidebarComponent</tspan>)</text>
+
+  <rect x="385" y="174" width="308" height="40" rx="7" fill="#090d16" stroke="#1e3a5f"/>
+  <text x="397" y="191" fill="#7dd3fc" font-size="11.5" font-family="monospace">lbl_title = <tspan fill="#dcdcaa">find_by</tspan>(css=<tspan fill="#ce9178">".title"</tspan>, <tspan fill="#34d399">anchor=True</tspan>)</text>
+  <text x="397" y="207" fill="#6a9955" font-size="10.5" font-family="monospace"># Habilita gratis .open() y .is_loaded()</text>
+
+  <rect x="66" y="222" width="627" height="42" rx="7" fill="#090d16" stroke="#1e3a5f"/>
+  <text x="78" y="239" fill="#7dd3fc" font-size="11.5" font-family="monospace">input_fullname = <tspan fill="#dcdcaa">find_by</tspan>(id=<tspan fill="#ce9178">"full-name"</tspan>)      <tspan fill="#6a9955"># -> InputElement (Label: "Fullname Input")</tspan></text>
+  <text x="78" y="256" fill="#7dd3fc" font-size="11.5" font-family="monospace">ddl_country    = <tspan fill="#dcdcaa">find_by</tspan>(id=<tspan fill="#ce9178">"country"</tspan>)        <tspan fill="#6a9955"># -> DropdownElement | chk_terms -> CheckboxElement</tspan></text>
+
+  <!-- Arrow C1 -> C2 -->
+  <line x1="380" y1="276" x2="380" y2="302" stroke="#38bdf8" stroke-width="2.2" marker-end="url(#arrowBlue)"/>
+  <text x="392" y="294" fill="#38bdf8" font-size="11" font-weight="600">Expone objetos tipados a la Capa 2</text>
+
+  <!-- ================================================================= -->
+  <!-- CAPA 2: METODOS ATOMICOS GRANULARES (SET / GET / CLICK) -->
+  <!-- ================================================================= -->
+  <rect x="50" y="306" width="660" height="162" rx="12" fill="url(#layer2Grad)" stroke="#34d399" stroke-width="1.8"/>
+  <rect x="66" y="318" width="38" height="22" rx="5" fill="#34d399"/>
+  <text x="72" y="333" fill="#090d16" font-size="11" font-weight="800">C2</text>
+  <text x="114" y="334" fill="#f1f5f9" font-size="15" font-weight="800">CAPA 2 — Métodos Atómicos Granulares (Setters, Getters y Acciones)</text>
+  <text x="66" y="354" fill="#94a3b8" font-size="12">1 Localizador = Métodos individuales de Escritura (set_*/select_*/check_*) y Lectura (get_*/is_*).</text>
+
+  <!-- Left box: Setters -->
+  <rect x="66" y="366" width="305" height="88" rx="7" fill="#090d16" stroke="#065f46"/>
+  <text x="78" y="384" fill="#34d399" font-size="11" font-weight="700">✍️ ESCRITURA / ACCIÓN (Retornan Self)</text>
+  <text x="78" y="402" fill="#e2e8f0" font-size="11.2" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">set_fullname</tspan>(self, v) -> <tspan fill="#4ec9b0">Self</tspan>:</text>
+  <text x="78" y="418" fill="#e2e8f0" font-size="11.2" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">select_country</tspan>(self, c) -> <tspan fill="#4ec9b0">Self</tspan>:</text>
+  <text x="78" y="434" fill="#e2e8f0" font-size="11.2" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">check_terms</tspan>(self) -> <tspan fill="#4ec9b0">Self</tspan>:</text>
+  <text x="78" y="449" fill="#e2e8f0" font-size="11.2" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">click_pay_now</tspan>(self) -> <tspan fill="#4ec9b0">Self</tspan>:</text>
+
+  <!-- Right box: Getters -->
+  <rect x="385" y="366" width="308" height="88" rx="7" fill="#090d16" stroke="#065f46"/>
+  <text x="397" y="384" fill="#38bdf8" font-size="11" font-weight="700">🔍 LECTURA / ESTADO (Retornan valor)</text>
+  <text x="397" y="402" fill="#e2e8f0" font-size="11.2" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">get_fullname</tspan>(self) -> <tspan fill="#4ec9b0">str</tspan>:</text>
+  <text x="397" y="418" fill="#94a3b8" font-size="10.8" font-family="monospace">    return self.input_fullname.get_value()</text>
+  <text x="397" y="434" fill="#e2e8f0" font-size="11.2" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">get_country</tspan>(self) -> <tspan fill="#4ec9b0">str</tspan>:</text>
+  <text x="397" y="449" fill="#e2e8f0" font-size="11.2" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">is_terms</tspan>(self) -> <tspan fill="#4ec9b0">bool</tspan>:</text>
+
+  <!-- Arrow C2 -> C3 -->
+  <line x1="380" y1="468" x2="380" y2="494" stroke="#34d399" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+  <text x="392" y="486" fill="#34d399" font-size="11" font-weight="600">Son reutilizados por la Capa 3 y por fill_form(data)</text>
+
+  <!-- ================================================================= -->
+  <!-- CAPA 3: METODOS COMPUESTOS DE FORMULARIO / NEGOCIO -->
+  <!-- ================================================================= -->
+  <rect x="50" y="498" width="660" height="134" rx="12" fill="url(#layer3Grad)" stroke="#c084fc" stroke-width="1.8"/>
+  <rect x="66" y="510" width="38" height="22" rx="5" fill="#c084fc"/>
+  <text x="72" y="525" fill="#090d16" font-size="11" font-weight="800">C3</text>
+  <text x="114" y="526" fill="#f1f5f9" font-size="15" font-weight="800">CAPA 3 — Métodos Compuestos de Formulario y Negocio</text>
+  <text x="66" y="545" fill="#94a3b8" font-size="12">Orquestan los métodos de la Capa 2 (nunca tocan los localizadores directamente).</text>
+
+  <rect x="66" y="555" width="305" height="64" rx="7" fill="#090d16" stroke="#581c87"/>
+  <text x="78" y="572" fill="#c084fc" font-size="10.8" font-weight="700">Opción A: Flujo Explícito Encadenado</text>
+  <text x="78" y="589" fill="#e2e8f0" font-size="11" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">complete_checkout</tspan>(self, name, c):</text>
+  <text x="78" y="606" fill="#9cdcfe" font-size="10.8" font-family="monospace">  return self.set_fullname(name).select_country(c)</text>
+
+  <rect x="385" y="555" width="308" height="64" rx="7" fill="#090d16" stroke="#581c87"/>
+  <text x="397" y="572" fill="#fbbf24" font-size="10.8" font-weight="700">Opción B: Auto-llenado desde JSON (fill_form)</text>
+  <text x="397" y="589" fill="#e2e8f0" font-size="11" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">submit_with_data</tspan>(self, data: dict):</text>
+  <text x="397" y="606" fill="#9cdcfe" font-size="10.8" font-family="monospace">  return self.fill_form(data).click_pay_now()</text>
+
+  <!-- ================================================================= -->
+  <!-- RIGHT SIDE: TEST CASE & JSON DATA ORCHESTRATION -->
+  <!-- ================================================================= -->
+  <rect x="765" y="114" width="305" height="518" rx="12" fill="url(#testGrad)" stroke="#fbbf24" stroke-width="1.8"/>
+  <rect x="783" y="130" width="94" height="22" rx="5" fill="#fbbf24"/>
+  <text x="791" y="145" fill="#090d16" font-size="11" font-weight="800">TEST SUITE</text>
+  <text x="783" y="172" fill="#f1f5f9" font-size="15" font-weight="800">Consumo desde el Test</text>
+  <text x="783" y="191" fill="#94a3b8" font-size="12">Accede vía <tspan fill="#38bdf8" font-family="monospace">self.app</tspan> a cualquiera de las capas según necesite el escenario:</text>
+
+  <!-- Box 1: Readiness Contract -->
+  <rect x="783" y="210" width="269" height="86" rx="8" fill="#090d16" stroke="#78350f"/>
+  <text x="795" y="229" fill="#38bdf8" font-size="11" font-weight="700">1. Navegación y Contrato de Carga (C1)</text>
+  <text x="795" y="248" fill="#e2e8f0" font-size="11" font-family="monospace">self.app.checkout_page.<tspan fill="#dcdcaa">open</tspan>()</text>
+  <text x="795" y="266" fill="#c586c0" font-size="11" font-family="monospace">assert <tspan fill="#e2e8f0">self.app.checkout_page.</tspan><tspan fill="#dcdcaa">is_loaded</tspan>()</text>
+  <text x="795" y="283" fill="#6a9955" font-size="10.2" font-family="monospace"># Verifica PAGE_PATH + anchor=True</text>
+
+  <!-- Box 2: Granular C2 usage -->
+  <rect x="783" y="314" width="269" height="104" rx="8" fill="#090d16" stroke="#78350f"/>
+  <text x="795" y="333" fill="#34d399" font-size="11" font-weight="700">2. Interacción / Validación Puntual (C2)</text>
+  <text x="795" y="352" fill="#e2e8f0" font-size="11" font-family="monospace">page.<tspan fill="#dcdcaa">set_fullname</tspan>(<tspan fill="#ce9178">"Ana Gómez"</tspan>)</text>
+  <text x="795" y="370" fill="#c586c0" font-size="11" font-family="monospace">assert <tspan fill="#e2e8f0">page.</tspan><tspan fill="#dcdcaa">get_fullname</tspan>() == <tspan fill="#ce9178">"Ana Gómez"</tspan></text>
+  <text x="795" y="392" fill="#6a9955" font-size="10.2" font-family="monospace"># O lectura masiva de varios getters:</text>
+  <text x="795" y="407" fill="#e2e8f0" font-size="10.5" font-family="monospace">page.<tspan fill="#dcdcaa">get_form_values</tspan>([<tspan fill="#ce9178">"fullname"</tspan>, <tspan fill="#ce9178">"terms"</tspan>])</text>
+
+  <!-- Box 3: Composite C3 / JSON usage -->
+  <rect x="783" y="436" width="269" height="106" rx="8" fill="#090d16" stroke="#78350f"/>
+  <text x="795" y="455" fill="#c084fc" font-size="11" font-weight="700">3. Flujo Completo o JSON Data-Driven (C3)</text>
+  <text x="795" y="473" fill="#dcdcaa" font-size="10.8" font-family="monospace">@test_case(id=<tspan fill="#ce9178">"CT-LOGIN-001"</tspan>)</text>
+  <text x="795" y="490" fill="#e2e8f0" font-size="10.8" font-family="monospace"><tspan fill="#c586c0">def</tspan> <tspan fill="#dcdcaa">test_order</tspan>(self):</text>
+  <text x="795" y="507" fill="#e2e8f0" font-size="10.8" font-family="monospace">  data = self.<tspan fill="#dcdcaa">get_data_for_test</tspan>()</text>
+  <text x="795" y="524" fill="#e2e8f0" font-size="10.8" font-family="monospace">  page.<tspan fill="#dcdcaa">submit_with_data</tspan>(data)</text>
+
+  <!-- Connector Arrows from Test Suite to C1, C2, C3 -->
+  <line x1="783" y1="252" x2="714" y2="205" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowAmber)"/>
+  <line x1="783" y1="365" x2="714" y2="395" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowAmber)"/>
+  <line x1="783" y1="495" x2="714" y2="565" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowAmber)"/>
+</svg>
+

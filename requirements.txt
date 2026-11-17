@@ -1,0 +1,15 @@
+selenium
+pytest
+allure-pytest
+pytest-xdist
+webdriver-manager
+pyyaml
+opencv-python
+mss
+Pillow
+axe-selenium-python
+sqlalchemy
+requests
+openpyxl
+faker
+playwright>=1.40.0

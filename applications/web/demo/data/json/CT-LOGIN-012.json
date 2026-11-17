@@ -1,0 +1,45 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-012",
+        "testCaseName": "test_dismiss_error_banner",
+        "title": "Clicking the 'X' dismiss button removes error banner and clears field error classes",
+        "description": "Clicking the 'X' dismiss button removes error banner and clears field error classes. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "UI Validation & Error Recovery",
+        "story": "Error Dismissal Behavior",
+        "severity": "Medium",
+        "priority": "P2",
+        "tag": [
+            "LOGIN",
+            "UI_UX",
+            "DISMISS"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login error banner is currently displayed"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "username": "bad_user",
+            "password": "bad_password"
+        },
+        "expected": {
+            "error_banner_visible": false,
+            "inputs_error_cleared": true
+        }
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-001",
+        "testCaseName": "test_valid_login_standard_user",
+        "title": "Valid login with standard credentials redirects to Inventory Page",
+        "description": "Valid login with standard credentials redirects to Inventory Page. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Happy Path & Session Lifecycle",
+        "story": "Standard User Authentication",
+        "severity": "Critical",
+        "priority": "P1",
+        "tag": [
+            "LOGIN",
+            "SMOKE",
+            "POSITIVE",
+            "HAPPY_PATH"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page is accessible",
+            "standard_user credentials are valid in YAML"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "role": "standard"
+        },
+        "expected": {
+            "expected_url_contains": "inventory.html",
+            "inventory_title": "Products"
+        }
+    }
+}

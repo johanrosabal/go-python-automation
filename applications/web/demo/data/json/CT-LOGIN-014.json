@@ -1,0 +1,41 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-014",
+        "testCaseName": "test_password_input_is_masked",
+        "title": "Password input has HTML type='password' to mask characters on screen",
+        "description": "Password input has HTML type='password' to mask characters on screen. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Security & Input Masking",
+        "story": "Password Masking Attribute",
+        "severity": "High",
+        "priority": "P1",
+        "tag": [
+            "LOGIN",
+            "SECURITY",
+            "MASKING"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page is loaded"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {},
+        "expected": {
+            "password_field_type": "password"
+        }
+    }
+}

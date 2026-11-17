@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Caches and temporary files
+.pytest_cache/
+.hypothesis/
+.cache/
+.tox/
+.coverage
+.nosepy
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Environments
+venv/
+.venv/
+env/
+.env
+.env.local
+build/
+dist/
+*.egg-info/
+
+# Automated Testing Artifacts
+allure-results/
+allure-report/
+# allure-tool/
+reports/
+screenshots/
+videos/
+logs/
+test-reports/
+
+# IDEs and Editors
+# .vscode/
+# .idea/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# OS-specific files
+DS_Store
+Thumbs.db
+logs/automation.log
+core/ui/actions/__pycache__/alert_actions.cpython-313.pyc
+core/ui/actions/__pycache__/base_action.cpython-313.pyc
+core/ui/actions/__pycache__/check_actions.cpython-313.pyc
+core/ui/actions/__pycache__/click_actions.cpython-313.pyc
+core/ui/actions/__pycache__/dropdown_actions.cpython-313.pyc
+core/ui/actions/__pycache__/elements_actions.cpython-313.pyc
+core/ui/actions/__pycache__/frame_actions.cpython-313.pyc
+core/ui/actions/__pycache__/get_text_actions.cpython-313.pyc
+core/ui/actions/__pycache__/navigation_actions.cpython-313.pyc
+core/ui/actions/__pycache__/radio_actions.cpython-313.pyc
+core/ui/actions/__pycache__/screenshot_actions.cpython-313.pyc
+core/ui/actions/__pycache__/scroll_actions.cpython-313.pyc
+core/ui/actions/__pycache__/send_keys_actions.cpython-313.pyc
+core/ui/actions/__pycache__/switch_windows_actions.cpython-313.pyc
+core/ui/actions/__pycache__/table_actions.cpython-313.pyc
+core/ui/actions/__pycache__/ui_element.cpython-313.pyc
+core/ui/actions/__pycache__/upload_actions.cpython-313.pyc

@@ -1,0 +1,45 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-005",
+        "testCaseName": "test_problem_user_login",
+        "title": "Login with problem_user allows access while maintaining UI stability",
+        "description": "Login with problem_user allows access while maintaining UI stability. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Credential Roles & Account Status",
+        "story": "Degraded Account Assets Handling",
+        "severity": "Medium",
+        "priority": "P2",
+        "tag": [
+            "LOGIN",
+            "ROLES",
+            "PROBLEM_USER",
+            "POSITIVE"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page is accessible",
+            "problem_user role is configured in YAML"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "role": "problem"
+        },
+        "expected": {
+            "expected_url_contains": "inventory.html"
+        }
+    }
+}

@@ -1,0 +1,97 @@
+name: Enterprise Automation CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  lint-and-validate:
+    name: 🔍 Static Code Analysis & Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install Linting Tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy compileall
+
+      - name: Syntax & Compilation Check
+        run: |
+          python -m compileall core/ applications/ tools/
+
+      - name: Run Ruff Linter
+        run: |
+          ruff check core/ applications/ --ignore E501,F401,F841 || true
+
+  test-dual-engine:
+    name: 🧪 ${{ matrix.engine }} Test Suite (Python ${{ matrix.python-version }} on ${{ matrix.os }})
+    needs: lint-and-validate
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.11", "3.12", "3.13"]
+        engine: [selenium, playwright]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Project Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || pip install pytest allure-pytest selenium playwright httpx jsonschema pyyaml
+
+      - name: Install Playwright Browsers & System Dependencies
+        if: matrix.engine == 'playwright'
+        run: |
+          playwright install --with-deps chromium
+
+      - name: Execute Automated Test Suite (${{ matrix.engine }})
+        env:
+          ENGINE: ${{ matrix.engine }}
+          HEADLESS: "true"
+          PW_TRACE: "true"
+          ENV: "qa"
+        run: |
+          pytest applications/web/demo/tests/test_login_happy_path.py applications/api/demo/tests/test_async_api_pipeline.py --alluredir=reports/allure-results -v
+
+      - name: Archive Playwright Traces
+        if: matrix.engine == 'playwright' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces-${{ matrix.os }}-${{ matrix.python-version }}
+          path: reports/traces/
+          retention-days: 14
+
+      - name: Archive Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ matrix.os }}-${{ matrix.engine }}-${{ matrix.python-version }}
+          path: reports/allure-results/
+          retention-days: 7
+

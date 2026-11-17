@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>IFrame Content</title>
+  <style>
+    body {
+      background: #0b0e14;
+      color: #f9fafb;
+      font-family: sans-serif;
+      padding: 10px;
+      margin: 0;
+      font-size: 0.82rem;
+    }
+    input {
+      background: #1a202e;
+      border: 1px solid #262f43;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+    button {
+      background: #8b5cf6;
+      border: none;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <strong>Marco IFrame Anidado</strong>
+    <div style="margin-top: 6px; display: flex; gap: 6px; align-items: center;">
+      <input type="text" id="inp-frame-text" placeholder="Texto dentro de frame..." value="Hello Frame" />
+      <button id="btn-frame-submit" onclick="document.getElementById('lbl-frame-status').textContent='Frame Action Passed';">Enviar</button>
+      <span id="lbl-frame-status" style="color: #10b981; font-weight: 700;">Listo</span>
+    </div>
+  </div>
+</body>
+</html>
+

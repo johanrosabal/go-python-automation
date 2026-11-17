@@ -1,0 +1,46 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-006",
+        "testCaseName": "test_performance_glitch_user_login",
+        "title": "Login with performance_glitch_user succeeds within acceptable SLA threshold",
+        "description": "Login with performance_glitch_user succeeds within acceptable SLA threshold. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Credential Roles & Account Status",
+        "story": "Performance Latency Handling",
+        "severity": "Medium",
+        "priority": "P2",
+        "tag": [
+            "LOGIN",
+            "ROLES",
+            "PERFORMANCE",
+            "POSITIVE"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page is accessible",
+            "performance_glitch_user role is configured in YAML"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "role": "performance"
+        },
+        "expected": {
+            "expected_url_contains": "inventory.html",
+            "max_wait_seconds": 15
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-004",
+        "testCaseName": "test_locked_out_user_error",
+        "title": "Login attempt with locked_out_user displays account locked error message",
+        "description": "Login attempt with locked_out_user displays account locked error message. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Credential Roles & Account Status",
+        "story": "Locked Account Handling",
+        "severity": "Critical",
+        "priority": "P1",
+        "tag": [
+            "LOGIN",
+            "NEGATIVE",
+            "ROLES",
+            "LOCKED_USER"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page is accessible",
+            "locked_out_user role is configured in YAML"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "role": "locked"
+        },
+        "expected": {
+            "error_key": "messages.error_locked"
+        }
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-015",
+        "testCaseName": "test_login_submit_via_enter_key",
+        "title": "Submitting login form by pressing ENTER on password field successfully authenticates",
+        "description": "Submitting login form by pressing ENTER on password field successfully authenticates. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Security & Input Masking",
+        "story": "Keyboard Form Submission",
+        "severity": "Medium",
+        "priority": "P2",
+        "tag": [
+            "LOGIN",
+            "KEYBOARD",
+            "ENTER_KEY",
+            "POSITIVE"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page is loaded"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "role": "standard"
+        },
+        "expected": {
+            "expected_url_contains": "inventory.html"
+        }
+    }
+}

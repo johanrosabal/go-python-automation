@@ -1,0 +1,64 @@
+{
+  "tests": {
+    "id": "HC-POM-001",
+    "testCaseName": "test_pom_actions_healthcheck_comprehensive",
+    "title": "Certificación Completa de Acciones y Métodos del Page Object (Health Check)",
+    "description": "Ejecuta una auditoría integral y certificación de salud sobre el sitio web emulado /sandbox validando inputs, gestos de mouse, dropdowns, checkboxes, tablas, uploads, diálogos, scroll, async CRUD y storage.",
+    "owner": "QA Automation Core",
+    "epic": "Framework Certification",
+    "feature": "Page Object Health Check",
+    "story": "Universal Actions 20/20 Parity",
+    "severity": "BLOCKER",
+    "priority": "P1",
+    "tag": ["HEALTHCHECK", "ACTIONS", "POM", "DUAL_ENGINE", "CRITICAL"],
+    "execution": {
+      "enabled": true,
+      "environments": ["dev", "qa", "uat", "prod"],
+      "skip_reason": ""
+    },
+    "preconditions": [
+      "Servidor web local del Test Runner activo en http://127.0.0.1:5000",
+      "Página /sandbox disponible y accesible sin restricciones de red"
+    ],
+    "link": {
+      "url": "http://127.0.0.1:5000/sandbox",
+      "name": "Automation Sandbox Playground"
+    },
+    "bugs": [],
+    "data": {
+      "username": "healthcheck_admin",
+      "password": "b64:cGFzc3dvcmQxMjM=",
+      "comments": "Auditoría de salud completada sin novedades.",
+      "country_text": "Mexico",
+      "country_code": "MX",
+      "crud_entity": "Customer_Enterprise_2026",
+      "dummy_upload_content": "HEALTHCHECK FILE AUDIT DATA",
+      "autocomplete_query": "sel",
+      "autocomplete_selection": "Selenium WebDriver",
+      "calendar_day": "15",
+      "wizard_email": "lead_qa@enterprise.com",
+      "wizard_user": "EnterpriseTester",
+      "sample_csv_filename": "sandbox_report.csv"
+    },
+    "expected": {
+      "input_validation_result": "Validado: healthcheck_admin",
+      "single_click_result": "Single Click Passed",
+      "double_click_result": "Double Click Passed",
+      "right_click_result": "Right Click Passed",
+      "dropdown_result": "País: MX",
+      "table_rows": 4,
+      "table_edit_action": "Editando usuario 101",
+      "crud_toast_message": "✅ Registro guardado con éxito",
+      "scroll_action_result": "Fondo alcanzado con éxito",
+      "storage_token": "JWT_HEALTHCHECK_TOKEN_2026",
+      "cookie_value": "qa_master_tester",
+      "autocomplete_result": "Seleccionado: Selenium WebDriver",
+      "calendar_date_display": "2026-11-15",
+      "calendar_date_result": "Fecha: 2026-11-15",
+      "wizard_completed_result": "Completado: lead_qa@enterprise.com (EnterpriseTester)",
+      "stale_click_result": "Click exitoso en nodo",
+      "download_status": "Descarga iniciada (sample.csv)",
+      "clipboard_verified_result": "Token verificado con éxito"
+    }
+  }
+}

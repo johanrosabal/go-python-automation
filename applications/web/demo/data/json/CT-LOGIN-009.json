@@ -1,0 +1,45 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-009",
+        "testCaseName": "test_login_both_fields_empty",
+        "title": "Login attempt with both username and password empty prioritizes username required error",
+        "description": "Login attempt with both username and password empty prioritizes username required error. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Negative Authentication & Missing Fields",
+        "story": "Both Fields Empty Validation",
+        "severity": "High",
+        "priority": "P1",
+        "tag": [
+            "LOGIN",
+            "NEGATIVE",
+            "VALIDATION"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page loaded",
+            "Both fields empty"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "username": "",
+            "password": ""
+        },
+        "expected": {
+            "error_key": "messages.error_username_required"
+        }
+    }
+}

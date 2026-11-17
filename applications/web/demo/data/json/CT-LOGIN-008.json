@@ -1,0 +1,45 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-008",
+        "testCaseName": "test_login_empty_password",
+        "title": "Login attempt with valid username and empty password displays password required error",
+        "description": "Login attempt with valid username and empty password displays password required error. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Negative Authentication & Missing Fields",
+        "story": "Empty Password Validation",
+        "severity": "High",
+        "priority": "P1",
+        "tag": [
+            "LOGIN",
+            "NEGATIVE",
+            "VALIDATION"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page loaded",
+            "Password field empty"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "username": "standard_user",
+            "password": ""
+        },
+        "expected": {
+            "error_key": "messages.error_password_required"
+        }
+    }
+}

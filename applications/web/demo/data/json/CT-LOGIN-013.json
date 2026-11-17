@@ -1,0 +1,46 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-013",
+        "testCaseName": "test_clear_login_form_inputs",
+        "title": "Clearing login inputs resets their values to empty without submitting the form",
+        "description": "Clearing login inputs resets their values to empty without submitting the form. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "UI Validation & Error Recovery",
+        "story": "Form Reset / Clear Fields",
+        "severity": "Low",
+        "priority": "P3",
+        "tag": [
+            "LOGIN",
+            "UI_UX",
+            "FORM_RESET"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page is loaded"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "username": "sample_user",
+            "password": "sample_password"
+        },
+        "expected": {
+            "username": "",
+            "password": "",
+            "error_banner_visible": false
+        }
+    }
+}

@@ -1,0 +1,100 @@
+# Standard Configuration File - QA (SauceDemo)
+name: SauceDemo - Swag Labs
+tms: https://tms.example.com/project/cases/
+web:
+  base_url: https://www.saucedemo.com/
+
+# Additional configurations for restricted networks
+browser:
+  edge_path: "C:/ai/go-python-selenium-automation/resources/drivers/msedgedriver.exe"
+
+default:
+  browser: chrome
+
+# Video recording (Option B - Local OpenCV)
+video:
+  enable_local: true
+  fps: 10
+  monitor_index: 1
+
+# Visual Regression Validation
+visual:
+  enable: false
+
+# Role-Based Users Configuration
+# Supported password formats (100% flexible):
+#   1. Plain text (no prefix):   password: "secret_sauce"
+#   2. Base64 (b64: prefix):     password: "b64:c2VjcmV0X3NhdWNl"
+#   3. Encrypted (ENC: prefix):  password: "ENC:..." (uses FRAMEWORK_SECRET_KEY from .env)
+#   4. Env Var + Fallback:       password: "${SAUCE_PASSWORD:b64:c2VjcmV0X3NhdWNl}"
+users:
+  default_role: standard
+
+  roles:
+    standard:
+      username: standard_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "Standard e-commerce customer"
+
+    locked:
+      username: locked_out_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "Locked out user account"
+
+    problem:
+      username: problem_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "User with UI and broken image defects"
+
+    performance:
+      username: performance_glitch_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "User with simulated network/render latency"
+
+    error:
+      username: error_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "User with runtime JS and interaction errors"
+
+    visual:
+      username: visual_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "User with CSS and layout visual shifts"
+
+messages:
+  error_invalid: "Epic sadface: Username and password do not match any user in this service"
+  error_locked: "Epic sadface: Sorry, this user has been locked out."
+  error_username_required: "Epic sadface: Username is required"
+  error_password_required: "Epic sadface: Password is required"
+
+# Multi-Database Connections Configuration
+# Supports multiple simultaneous databases per environment (SQLite, PostgreSQL, MySQL, SQL Server, Oracle).
+# Passwords support the same 3-tier security: plain text, "b64:...", or "ENC:...".
+databases:
+  default_connection: primary
+
+  connections:
+    primary:
+      engine: sqlite
+      database: "resources/data/test.db"
+      description: "Primary local SQLite database for Demo"
+
+    orders_db:
+      engine: postgresql
+      host: "${ORDERS_DB_HOST:localhost}"
+      port: 5432
+      database: orders_qa
+      username: qa_reader
+      password: "b64:c2VjcmV0X3NhdWNl"
+      pool_size: 5
+      max_overflow: 10
+      description: "Orders microservice PostgreSQL database"
+
+    audit_db:
+      engine: mysql+pymysql
+      host: "${AUDIT_DB_HOST:localhost}"
+      port: 3306
+      database: audit_logs_qa
+      username: audit_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "Audit & security events MySQL database"

@@ -1,0 +1,47 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-011",
+        "testCaseName": "test_login_error_visual_feedback",
+        "title": "Failed login highlights input borders in red and renders SVG error icons",
+        "description": "Failed login highlights input borders in red and renders SVG error icons. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "UI Validation & Error Recovery",
+        "story": "Visual Error Feedback & Indicators",
+        "severity": "Medium",
+        "priority": "P2",
+        "tag": [
+            "LOGIN",
+            "UI_UX",
+            "ERROR_FEEDBACK"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page is loaded"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "username": "",
+            "password": ""
+        },
+        "expected": {
+            "username_has_error_class": true,
+            "password_has_error_class": true,
+            "username_error_icon_visible": true,
+            "password_error_icon_visible": true
+        }
+    }
+}

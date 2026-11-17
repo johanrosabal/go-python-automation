@@ -1,0 +1,45 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-010",
+        "testCaseName": "test_login_unregistered_credentials",
+        "title": "Login attempt with unregistered credentials displays username and password mismatch error",
+        "description": "Login attempt with unregistered credentials displays username and password mismatch error. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Negative Authentication & Missing Fields",
+        "story": "Invalid Credentials Mismatch",
+        "severity": "Critical",
+        "priority": "P1",
+        "tag": [
+            "LOGIN",
+            "NEGATIVE",
+            "INVALID_CREDENTIALS"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page loaded",
+            "User 'invalid_user' does not exist"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "username": "invalid_user",
+            "password": "wrong_password"
+        },
+        "expected": {
+            "error_key": "messages.error_invalid"
+        }
+    }
+}

@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automation Sandbox — Framework Actions Health Check</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0e121a;
+      --bg-secondary: #141824;
+      --bg-card: #1a202e;
+      --border-color: #262f43;
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --accent-primary: #ff004f;
+      --accent-cyan: #00d2ff;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      padding: 24px 32px 80px;
+      line-height: 1.5;
+    }
+
+    header.sandbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .brand-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-badge {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      background: rgba(255, 0, 79, 0.15);
+      color: var(--accent-primary);
+      border: 1px solid rgba(255, 0, 79, 0.3);
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .header-links a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-left: 16px;
+    }
+
+    .sandbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 20px;
+    }
+
+    .sandbox-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-tag {
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"], input[type="password"], textarea, select {
+      width: 100%;
+      background: #0b0e14;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary { background: var(--accent-primary); color: #fff; }
+    .btn-primary:hover { background: #d90043; }
+    .btn-secondary { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
+    .btn-cyan { background: var(--accent-cyan); color: #000; font-weight: 700; }
+    .btn-cyan:hover { background: #00b8e6; }
+
+    .result-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .hover-box {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .hover-box:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      background: rgba(0, 210, 255, 0.05);
+    }
+
+    .drag-container {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .drag-box {
+      flex: 1;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    #drag-source { background: rgba(139, 92, 246, 0.2); border: 1px solid var(--accent-purple); color: #c4b5fd; cursor: grab; }
+    #drag-target { background: rgba(255, 255, 255, 0.03); border: 2px dashed var(--border-color); color: var(--text-secondary); }
+    #drag-target.dragover { border-color: var(--accent-green); background: rgba(16, 185, 129, 0.1); color: var(--accent-green); }
+
+    /* Data Table */
+    table.sandbox-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    table.sandbox-table th {
+      text-align: left;
+      padding: 8px 10px;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+    table.sandbox-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    /* Scrollable Box */
+    .scroll-box {
+      height: 160px;
+      overflow-y: scroll;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      background: #0b0e14;
+      display: flex;
+      flex-direction: column;
+      gap: 120px;
+    }
+
+    /* Toast Notification */
+    .toast-overlay {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: #10b981;
+      color: #000;
+      font-weight: 700;
+      padding: 14px 20px;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 1000;
+      animation: slideIn 0.3s ease;
+    }
+
+    /* Spinner Overlay */
+    .spinner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(14, 18, 26, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      z-index: 10;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-top-color: var(--accent-cyan);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+    /* Modal Dialog */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      width: 400px;
+      max-width: 90%;
+    }
+
+    /* Autocomplete List */
+    .autocomplete-wrap { position: relative; }
+    .autocomplete-list {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #141824;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      max-height: 150px;
+      overflow-y: auto;
+      z-index: 50;
+      display: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .suggestion-item {
+      padding: 8px 12px;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .suggestion-item:hover {
+      background: rgba(0, 210, 255, 0.15);
+      color: var(--accent-cyan);
+    }
+
+    /* Wizard Stepper */
+    .wizard-steps-bar {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .wizard-step-tab {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      padding-bottom: 4px;
+    }
+    .wizard-step-tab.active {
+      color: var(--accent-cyan);
+      border-bottom: 2px solid var(--accent-cyan);
+    }
+
+    /* Calendar Popover */
+    .calendar-popover {
+      display: none;
+      background: #141824;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      margin-top: 8px;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+      margin-top: 6px;
+    }
+    .cal-day {
+      padding: 5px;
+      font-size: 0.76rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .cal-day:hover, .cal-day.active {
+      background: var(--accent-cyan);
+      color: #000;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="sandbox-header" id="sandbox-header">
+    <div class="brand-title">
+      <span>🧪</span> Automation Sandbox
+      <span class="brand-badge">HEALTH CHECK 18 MÓDULOS (ENTERPRISE)</span>
+    </div>
+    <div class="header-links">
+      <a href="/docs/">📄 Documentación</a>
+      <a href="/">🚀 Test Runner</a>
+    </div>
+  </header>
+
+  <!-- Notification Toast -->
+  <div id="toast-crud-notification" class="toast-overlay">
+    ✅ Registro guardado con éxito
+  </div>
+
+  <!-- HTML Modal Dialog -->
+  <div id="mdl-sandbox-dialog" class="modal-backdrop">
+    <div class="modal-content">
+      <h3 style="margin-bottom: 8px;">Modal de Confirmación</h3>
+      <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 16px;">
+        Este diálogo emula una ventana modal propia de la aplicación para certificar contenedores y clicks.
+      </p>
+      <button id="btn-close-modal" class="btn btn-secondary">Cerrar Modal</button>
+    </div>
+  </div>
+
+  <!-- Sandbox Grid Cards -->
+  <div class="sandbox-grid">
+
+    <!-- 1. INPUTS & TYPING -->
+    <div class="sandbox-card" id="card-inputs">
+      <div class="card-head">
+        <span class="card-title">📝 1. Inputs &amp; Typing</span>
+        <span class="card-tag">InputElement</span>
+      </div>
+      <div>
+        <label for="inp-username">Nombre de Usuario (type)</label>
+        <input type="text" id="inp-username" name="username" placeholder="Escribe aquí..." />
+      </div>
+      <div>
+        <label for="inp-password">Contraseña Cifrada (type_encrypted)</label>
+        <input type="password" id="inp-password" name="password" placeholder="••••••••" />
+      </div>
+      <div>
+        <label for="inp-clearable">Input con Limpieza (clear &amp; physical_clear)</label>
+        <input type="text" id="inp-clearable" value="Texto previo que debe ser borrado" />
+      </div>
+      <div>
+        <label for="inp-comments">Área de Texto (send_keys)</label>
+        <textarea id="inp-comments" rows="2" placeholder="Comentarios adicionales..."></textarea>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button id="btn-submit-inputs" class="btn btn-primary">Validar Inputs</button>
+        <span id="lbl-input-result" class="result-badge">Esperando entrada...</span>
+      </div>
+    </div>
+
+    <!-- 2. CLICKS & MOUSE GESTURES -->
+    <div class="sandbox-card" id="card-clicks">
+      <div class="card-head">
+        <span class="card-title">👆 2. Clicks &amp; Gestos Mouse</span>
+        <span class="card-tag">ButtonElement</span>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button id="btn-single-click" class="btn btn-secondary">Click Simple</button>
+        <button id="btn-double-click" class="btn btn-secondary">Doble Click</button>
+        <button id="btn-right-click" class="btn btn-secondary">Right Click</button>
+      </div>
+      <div id="box-hover" class="hover-box">
+        Posiciona el cursor aquí (hover)
+      </div>
+      <div class="drag-container">
+        <div id="drag-source" draggable="true">Arrastra este item</div>
+        <div id="drag-target">Suelta aquí</div>
+      </div>
+      <div>
+        <span id="lbl-click-result" class="result-badge">Listo para gestos</span>
+      </div>
+    </div>
+
+    <!-- 3. DROPDOWNS & SELECTIONS -->
+    <div class="sandbox-card" id="card-dropdowns">
+      <div class="card-head">
+        <span class="card-title">📋 3. Dropdowns &amp; Selects</span>
+        <span class="card-tag">DropdownElement</span>
+      </div>
+      <div>
+        <label for="ddl-country">Seleccionar País (text, value, index)</label>
+        <select id="ddl-country">
+          <option value="">-- Elige un país --</option>
+          <option value="US">United States</option>
+          <option value="CA">Canada</option>
+          <option value="MX">Mexico</option>
+          <option value="ES">Spain</option>
+        </select>
+      </div>
+      <div>
+        <label for="ddl-multi">Selección Múltiple</label>
+        <select id="ddl-multi" multiple style="height: 70px;">
+          <option value="py">Python</option>
+          <option value="js">JavaScript</option>
+          <option value="go">Go Lang</option>
+        </select>
+      </div>
+      <div>
+        <span id="lbl-dropdown-result" class="result-badge">País no seleccionado</span>
+      </div>
+    </div>
+
+    <!-- 4. CHECKBOXES & RADIOS -->
+    <div class="sandbox-card" id="card-checkboxes">
+      <div class="card-head">
+        <span class="card-title">☑️ 4. Checkboxes &amp; Radios</span>
+        <span class="card-tag">CheckboxElement</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" id="chk-terms" /> Acepto términos y condiciones
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" id="chk-newsletter" checked /> Suscribirse al boletín
+        </label>
+      </div>
+      <div style="margin-top: 4px;">
+        <label>Tipo de Envío (Radio Group):</label>
+        <div style="display: flex; gap: 14px; margin-top: 4px;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="shipping" id="rdo-standard" value="standard" checked /> Estándar
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="shipping" id="rdo-express" value="express" /> Express (24h)
+          </label>
+        </div>
+      </div>
+      <div>
+        <span id="lbl-checkbox-result" class="result-badge">Checkboxes listos</span>
+      </div>
+    </div>
+
+    <!-- 5. DATA TABLE & GRIDS -->
+    <div class="sandbox-card" id="card-tables" style="grid-column: span 1;">
+      <div class="card-head">
+        <span class="card-title">📊 5. Tabla de Datos</span>
+        <span class="card-tag">TableElement</span>
+      </div>
+      <table class="sandbox-table" id="tbl-customers">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Rol</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>101</td>
+            <td>Alice Smith</td>
+            <td>Admin</td>
+            <td><button class="btn btn-secondary" id="btn-edit-101" style="padding: 2px 8px; font-size: 0.75rem;">Editar</button></td>
+          </tr>
+          <tr>
+            <td>102</td>
+            <td>Bob Jones</td>
+            <td>Viewer</td>
+            <td><button class="btn btn-secondary" id="btn-edit-102" style="padding: 2px 8px; font-size: 0.75rem;">Editar</button></td>
+          </tr>
+          <tr>
+            <td>103</td>
+            <td>Charlie Brown</td>
+            <td>Editor</td>
+            <td><button class="btn btn-secondary" id="btn-edit-103" style="padding: 2px 8px; font-size: 0.75rem;">Editar</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <span id="lbl-table-action-result" class="result-badge">Filas cargadas: 3</span>
+      </div>
+    </div>
+
+    <!-- 6. FILE UPLOAD -->
+    <div class="sandbox-card" id="card-upload">
+      <div class="card-head">
+        <span class="card-title">📁 6. Subida de Archivos</span>
+        <span class="card-tag">UploadElement</span>
+      </div>
+      <div>
+        <label for="upl-document">Selecciona archivo para subir:</label>
+        <input type="file" id="upl-document" />
+      </div>
+      <div style="font-size: 0.85rem; color: var(--text-secondary);">
+        Archivo detectado: <strong id="lbl-upload-filename" style="color: #fff;">Ninguno</strong>
+      </div>
+    </div>
+
+    <!-- 7. DIALOGS, ALERTS & MODALS -->
+    <div class="sandbox-card" id="card-dialogs">
+      <div class="card-head">
+        <span class="card-title">💬 7. Alertas &amp; Modales</span>
+        <span class="card-tag">AlertActions</span>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button id="btn-trigger-alert" class="btn btn-secondary">Disparar Alert</button>
+        <button id="btn-trigger-confirm" class="btn btn-secondary">Disparar Confirm</button>
+        <button id="btn-trigger-prompt" class="btn btn-secondary">Disparar Prompt</button>
+        <button id="btn-open-modal" class="btn btn-cyan">Abrir Modal HTML</button>
+      </div>
+      <div>
+        <span id="lbl-dialog-result" class="result-badge">Sin alertas recientes</span>
+      </div>
+    </div>
+
+    <!-- 8. ASYNC CRUD: SPINNER & TOAST -->
+    <div class="sandbox-card" id="card-async-crud" style="position: relative;">
+      <!-- Loading Overlay -->
+      <div id="spn-crud-loader" class="spinner-overlay">
+        <div class="spinner"></div>
+      </div>
+      <div class="card-head">
+        <span class="card-title">⏳ 8. Protocolo CRUD (Loader &amp; Toast)</span>
+        <span class="card-tag">Regla 7 Obligatoria</span>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary);">
+        Simula una mutación asíncrona real. El botón activa un overlay spinner de 1.2s y muestra una notificación Toast de éxito.
+      </p>
+      <div>
+        <input type="text" id="inp-crud-entity-name" placeholder="Nombre de entidad..." value="Customer_Test_001" />
+      </div>
+      <div>
+        <button id="btn-save-crud" class="btn btn-primary">💾 Guardar Registro (CRUD)</button>
+      </div>
+      <div>
+        <span id="lbl-crud-status" class="result-badge">Formulario listo</span>
+      </div>
+    </div>
+
+    <!-- 9. IFRAME INTEGRATION -->
+    <div class="sandbox-card" id="card-iframe">
+      <div class="card-head">
+        <span class="card-title">🖼️ 9. IFrame Anidado</span>
+        <span class="card-tag">FrameActions</span>
+      </div>
+      <iframe id="frame-sandbox" src="/sandbox/iframe" style="width: 100%; height: 110px; border: 1px solid var(--border-color); border-radius: 4px; background: #0b0e14;"></iframe>
+    </div>
+
+    <!-- 10. MULTI-WINDOW / TABS -->
+    <div class="sandbox-card" id="card-tabs">
+      <div class="card-head">
+        <span class="card-title">🪟 10. Multi-Ventana / Nueva Pestaña</span>
+        <span class="card-tag">SwitchWindowsActions</span>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary);">
+        Abre una nueva pestaña en el navegador para certificar <code>switch_to_new()</code> y <code>to_tab()</code>.
+      </p>
+      <div>
+        <a id="lnk-open-new-tab" href="/sandbox/newtab" target="_blank" class="btn btn-secondary">
+          🔗 Abrir Nueva Pestaña
+        </a>
+      </div>
+    </div>
+
+    <!-- 11. SCROLL & VIEWPORT -->
+    <div class="sandbox-card" id="card-scroll">
+      <div class="card-head">
+        <span class="card-title">📜 11. Scroll &amp; Viewport</span>
+        <span class="card-tag">ScrollActions</span>
+      </div>
+      <div class="scroll-box" id="box-scrollable">
+        <div id="anchor-scroll-top" style="color: var(--accent-cyan); font-weight: 700;">▲ Inicio del Contenedor</div>
+        <div id="anchor-scroll-center" style="color: var(--accent-amber); font-weight: 700;">● Centro del Contenedor</div>
+        <div id="anchor-scroll-bottom" style="color: var(--accent-green); font-weight: 700;">
+          ▼ Fondo del Contenedor
+          <button id="btn-bottom-scroll-action" class="btn btn-secondary" style="margin-top: 6px; padding: 4px 8px; font-size: 0.75rem;">Click en Fondo</button>
+        </div>
+      </div>
+      <div>
+        <span id="lbl-scroll-result" class="result-badge">Listo para scroll</span>
+      </div>
+    </div>
+
+    <!-- 12. STORAGE & COOKIES -->
+    <div class="sandbox-card" id="card-storage">
+      <div class="card-head">
+        <span class="card-title">🍪 12. Storage &amp; Cookies</span>
+        <span class="card-tag">StorageActions</span>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button id="btn-set-storage" class="btn btn-secondary">Guardar Token &amp; Cookie</button>
+        <button id="btn-clear-storage" class="btn btn-secondary">Limpiar Storage</button>
+      </div>
+      <div style="font-size: 0.82rem; font-family: 'JetBrains Mono', monospace; color: var(--text-secondary);">
+        <div>Token: <span id="lbl-storage-token" style="color: #fff;">None</span></div>
+        <div>Cookie: <span id="lbl-cookie-value" style="color: #fff;">None</span></div>
+      </div>
+    </div>
+
+    <!-- 13. AUTOCOMPLETE / TYPEAHEAD CON DEBOUNCE -->
+    <div class="sandbox-card" id="card-autocomplete">
+      <div class="card-head">
+        <span class="card-title">🔎 13. Autocomplete con Debounce</span>
+        <span class="card-tag">Dynamic AJAX</span>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary);">
+        Emula búsqueda asíncrona con latencia de red (debounce 250ms). Escribe "sel" o "play".
+      </p>
+      <div class="autocomplete-wrap">
+        <input type="text" id="inp-autocomplete" placeholder="Buscar framework (ej. sel, play, py)..." autocomplete="off" />
+        <div id="spn-autocomplete" style="display:none; font-size: 0.75rem; color: var(--accent-cyan); margin-top: 4px;">
+          ⏳ Consultando sugerencias...
+        </div>
+        <div id="box-autocomplete-list" class="autocomplete-list"></div>
+      </div>
+      <div>
+        <span id="lbl-autocomplete-result" class="result-badge">Ninguna selección</span>
+      </div>
+    </div>
+
+    <!-- 14. DATEPICKER & SLIDERS -->
+    <div class="sandbox-card" id="card-datepicker-slider">
+      <div class="card-head">
+        <span class="card-title">📅 14. Datepicker &amp; Sliders</span>
+        <span class="card-tag">Interactive Controls</span>
+      </div>
+      <div>
+        <label for="inp-date-display">Fecha seleccionada:</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="inp-date-display" placeholder="YYYY-MM-DD" readonly style="flex: 1;" />
+          <button id="btn-toggle-calendar" class="btn btn-secondary">📅 Calendario</button>
+        </div>
+        <div id="box-calendar-popover" class="calendar-popover">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 4px;">Noviembre 2026</div>
+          <div class="calendar-grid">
+            <button class="cal-day" data-day="01">1</button>
+            <button class="cal-day" data-day="05">5</button>
+            <button class="cal-day" data-day="10">10</button>
+            <button class="cal-day" data-day="15">15</button>
+            <button class="cal-day" data-day="20">20</button>
+            <button class="cal-day" data-day="25">25</button>
+            <button class="cal-day" data-day="30">30</button>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 8px;">
+        <label for="rng-volume-slider">Control Slider de Volumen:</label>
+        <input type="range" id="rng-volume-slider" min="0" max="100" value="30" style="width: 100%;" />
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <span id="lbl-date-result" class="result-badge">Fecha: Ninguna</span>
+        <span id="lbl-slider-result" class="result-badge">Volumen: 30%</span>
+      </div>
+    </div>
+
+    <!-- 15. FORMULARIO MULTI-PASO (WIZARD) -->
+    <div class="sandbox-card" id="card-wizard">
+      <div class="card-head">
+        <span class="card-title">🧙 15. Formulario Multi-Paso</span>
+        <span class="card-tag">Wizard Stepper</span>
+      </div>
+      <div class="wizard-steps-bar">
+        <span class="wizard-step-tab active" id="tab-step-1">1. Cuenta</span>
+        <span class="wizard-step-tab" id="tab-step-2">2. Perfil</span>
+        <span class="wizard-step-tab" id="tab-step-3">3. Resumen</span>
+      </div>
+
+      <!-- Step 1 Content -->
+      <div id="step-1-content">
+        <label for="inp-wizard-email">Correo Electrónico:</label>
+        <input type="text" id="inp-wizard-email" placeholder="admin@enterprise.com" value="lead_qa@enterprise.com" />
+        <div style="margin-top: 10px; text-align: right;">
+          <button id="btn-wizard-next-1" class="btn btn-cyan">Siguiente ❯</button>
+        </div>
+      </div>
+
+      <!-- Step 2 Content -->
+      <div id="step-2-content" style="display: none;">
+        <label for="inp-wizard-username">Nombre de Usuario:</label>
+        <input type="text" id="inp-wizard-username" placeholder="Tu usuario..." value="EnterpriseTester" />
+        <div style="margin-top: 10px; display: flex; justify-content: space-between;">
+          <button id="btn-wizard-prev-2" class="btn btn-secondary">❮ Atrás</button>
+          <button id="btn-wizard-next-2" class="btn btn-cyan">Siguiente ❯</button>
+        </div>
+      </div>
+
+      <!-- Step 3 Content -->
+      <div id="step-3-content" style="display: none;">
+        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;" id="lbl-wizard-summary">
+          Resumen listo para confirmación.
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <button id="btn-wizard-prev-3" class="btn btn-secondary">❮ Atrás</button>
+          <button id="btn-wizard-finish" class="btn btn-primary">✅ Finalizar Registro</button>
+        </div>
+      </div>
+
+      <div>
+        <span id="lbl-wizard-result" class="result-badge">Paso 1 / 3</span>
+      </div>
+    </div>
+
+    <!-- 16. RESILIENCIA DOM & STALE ELEMENT -->
+    <div class="sandbox-card" id="card-stale-resilience">
+      <div class="card-head">
+        <span class="card-title">💥 16. Stale Element &amp; Resiliencia</span>
+        <span class="card-tag">Fault Tolerance</span>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary);">
+        Simula destrucción y re-creación de nodos en tiempo de ejecución para certificar auto-recuperación ante <code>StaleElementReferenceException</code>.
+      </p>
+      <div style="display: flex; gap: 8px;">
+        <button id="btn-recreate-node" class="btn btn-secondary">⚡ Destruir y Recrear Nodo</button>
+      </div>
+      <div id="cnt-stale-container" style="padding: 10px; border: 1px dashed var(--border-color); border-radius: var(--radius-sm); text-align: center;">
+        <button id="btn-stale-target" class="btn btn-primary">🎯 Click Nodo Volátil</button>
+      </div>
+      <div>
+        <span id="lbl-stale-result" class="result-badge">Nodo original activo</span>
+      </div>
+    </div>
+
+    <!-- 17. DESCARGA DE ARCHIVOS -->
+    <div class="sandbox-card" id="card-file-download">
+      <div class="card-head">
+        <span class="card-title">📥 17. Descarga de Archivos</span>
+        <span class="card-tag">DownloadActions</span>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary);">
+        Descarga directa de reporte CSV para certificar validaciones de archivos en descargas.
+      </p>
+      <div>
+        <a id="lnk-download-csv" href="/sandbox/download/sample.csv" class="btn btn-cyan" download="sandbox_report.csv">
+          📥 Descargar Reporte CSV
+        </a>
+      </div>
+      <div>
+        <span id="lbl-download-status" class="result-badge">Reporte disponible (sample.csv)</span>
+      </div>
+    </div>
+
+    <!-- 18. PORTAPAPELES & VALIDACIÓN DE TOKEN -->
+    <div class="sandbox-card" id="card-clipboard-keys">
+      <div class="card-head">
+        <span class="card-title">📋 18. Portapapeles &amp; Keys</span>
+        <span class="card-tag">Clipboard API</span>
+      </div>
+      <div>
+        <label for="inp-copy-source">Token Secreto:</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="inp-copy-source" value="ENTERPRISE_QA_KEY_9988" readonly style="flex: 1;" />
+          <button id="btn-copy-clipboard" class="btn btn-secondary">📋 Copiar</button>
+        </div>
+      </div>
+      <div style="margin-top: 8px;">
+        <label for="inp-paste-target">Pegar Token para Validar:</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="inp-paste-target" placeholder="Pega el token aquí..." style="flex: 1;" />
+          <button id="btn-validate-token" class="btn btn-primary">Validar</button>
+        </div>
+      </div>
+      <div>
+        <span id="lbl-clipboard-result" class="result-badge">Esperando validación</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Inputs validation
+    document.getElementById('btn-submit-inputs').addEventListener('click', () => {
+      const u = document.getElementById('inp-username').value;
+      const p = document.getElementById('inp-password').value;
+      const res = document.getElementById('lbl-input-result');
+      if (u && p) {
+        res.textContent = `Validado: ${u}`;
+        res.style.color = '#10b981';
+      } else {
+        res.textContent = 'Faltan campos';
+        res.style.color = '#ef4444';
+      }
+    });
+
+    // Clicks
+    const clickRes = document.getElementById('lbl-click-result');
+    document.getElementById('btn-single-click').addEventListener('click', () => {
+      clickRes.textContent = 'Single Click Passed';
+    });
+    document.getElementById('btn-double-click').addEventListener('dblclick', () => {
+      clickRes.textContent = 'Double Click Passed';
+    });
+    document.getElementById('btn-right-click').addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      clickRes.textContent = 'Right Click Passed';
+    });
+
+    // Hover
+    const hoverBox = document.getElementById('box-hover');
+    hoverBox.addEventListener('mouseenter', () => {
+      hoverBox.textContent = '¡Hover detectado con éxito!';
+    });
+    hoverBox.addEventListener('mouseleave', () => {
+      hoverBox.textContent = 'Posiciona el cursor aquí (hover)';
+    });
+
+    // Drag and Drop
+    const source = document.getElementById('drag-source');
+    const target = document.getElementById('drag-target');
+    source.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', 'drag-item'));
+    target.addEventListener('dragover', (e) => { e.preventDefault(); target.classList.add('dragover'); });
+    target.addEventListener('dragleave', () => target.classList.remove('dragover'));
+    target.addEventListener('drop', (e) => {
+      e.preventDefault();
+      target.classList.remove('dragover');
+      target.textContent = '¡Elemento soltado con éxito!';
+      target.style.color = '#10b981';
+    });
+
+    // Dropdown
+    document.getElementById('ddl-country').addEventListener('change', (e) => {
+      document.getElementById('lbl-dropdown-result').textContent = `País: ${e.target.value}`;
+    });
+
+    // Checkboxes
+    const updateCheckResult = () => {
+      const terms = document.getElementById('chk-terms').checked;
+      const news = document.getElementById('chk-newsletter').checked;
+      document.getElementById('lbl-checkbox-result').textContent = `Términos: ${terms} | News: ${news}`;
+    };
+    document.getElementById('chk-terms').addEventListener('change', updateCheckResult);
+    document.getElementById('chk-newsletter').addEventListener('change', updateCheckResult);
+
+    // Table buttons
+    ['101', '102', '103'].forEach(id => {
+      const btn = document.getElementById(`btn-edit-${id}`);
+      if (btn) {
+        btn.addEventListener('click', () => {
+          document.getElementById('lbl-table-action-result').textContent = `Editando usuario ${id}`;
+        });
+      }
+    });
+
+    // File Upload
+    document.getElementById('upl-document').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('lbl-upload-filename').textContent = file.name;
+      }
+    });
+
+    // Dialogs
+    document.getElementById('btn-trigger-alert').addEventListener('click', () => {
+      alert('Mensaje de alerta del Sandbox');
+      document.getElementById('lbl-dialog-result').textContent = 'Alert aceptado';
+    });
+    document.getElementById('btn-trigger-confirm').addEventListener('click', () => {
+      const ok = confirm('¿Desea confirmar la acción?');
+      document.getElementById('lbl-dialog-result').textContent = ok ? 'Confirm: OK' : 'Confirm: Cancel';
+    });
+    document.getElementById('btn-trigger-prompt').addEventListener('click', () => {
+      const text = prompt('Ingrese su código:');
+      document.getElementById('lbl-dialog-result').textContent = `Prompt: ${text || 'Vacío'}`;
+    });
+
+    // Modal HTML
+    const modal = document.getElementById('mdl-sandbox-dialog');
+    document.getElementById('btn-open-modal').addEventListener('click', () => { modal.style.display = 'flex'; });
+    document.getElementById('btn-close-modal').addEventListener('click', () => { modal.style.display = 'none'; });
+
+    // Async CRUD: Loader & Toast
+    const loader = document.getElementById('spn-crud-loader');
+    const toast = document.getElementById('toast-crud-notification');
+    document.getElementById('btn-save-crud').addEventListener('click', () => {
+      loader.style.display = 'flex';
+      setTimeout(() => {
+        loader.style.display = 'none';
+        toast.style.display = 'block';
+        document.getElementById('lbl-crud-status').textContent = 'Guardado OK';
+        setTimeout(() => { toast.style.display = 'none'; }, 4000);
+      }, 1200);
+    });
+
+    // Scroll bottom action
+    document.getElementById('btn-bottom-scroll-action').addEventListener('click', () => {
+      document.getElementById('lbl-scroll-result').textContent = 'Fondo alcanzado con éxito';
+    });
+
+    // Storage & Cookies
+    document.getElementById('btn-set-storage').addEventListener('click', () => {
+      localStorage.setItem('sandbox_token', 'JWT_HEALTHCHECK_TOKEN_2026');
+      document.cookie = 'sandbox_user=qa_master_tester; path=/';
+      document.getElementById('lbl-storage-token').textContent = 'JWT_HEALTHCHECK_TOKEN_2026';
+      document.getElementById('lbl-cookie-value').textContent = 'qa_master_tester';
+    });
+
+    document.getElementById('btn-clear-storage').addEventListener('click', () => {
+      localStorage.clear();
+      document.cookie = 'sandbox_user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.getElementById('lbl-storage-token').textContent = 'None';
+      document.getElementById('lbl-cookie-value').textContent = 'None';
+    });
+
+    // 13. Autocomplete con Debounce
+    const autoInput = document.getElementById('inp-autocomplete');
+    const autoList = document.getElementById('box-autocomplete-list');
+    const autoSpinner = document.getElementById('spn-autocomplete');
+    const autoResult = document.getElementById('lbl-autocomplete-result');
+    const frameworks = [
+      'Selenium WebDriver',
+      'Playwright Automation',
+      'Pytest Framework',
+      'Appium Mobile',
+      'Cypress E2E',
+      'Robot Framework'
+    ];
+    let debounceTimer;
+
+    autoInput.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer);
+      const query = e.target.value.trim().toLowerCase();
+      if (!query) {
+        autoList.style.display = 'none';
+        autoSpinner.style.display = 'none';
+        return;
+      }
+      autoSpinner.style.display = 'block';
+      debounceTimer = setTimeout(() => {
+        autoSpinner.style.display = 'none';
+        const matches = frameworks.filter(f => f.toLowerCase().includes(query));
+        autoList.innerHTML = '';
+        if (matches.length > 0) {
+          matches.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'suggestion-item';
+            div.textContent = item;
+            div.addEventListener('click', () => {
+              autoInput.value = item;
+              autoList.style.display = 'none';
+              autoResult.textContent = `Seleccionado: ${item}`;
+            });
+            autoList.appendChild(div);
+          });
+          autoList.style.display = 'block';
+        } else {
+          autoList.style.display = 'none';
+        }
+      }, 250);
+    });
+
+    // 14. Datepicker & Sliders
+    const calToggle = document.getElementById('btn-toggle-calendar');
+    const calPopover = document.getElementById('box-calendar-popover');
+    const dateDisplay = document.getElementById('inp-date-display');
+    const dateResult = document.getElementById('lbl-date-result');
+    calToggle.addEventListener('click', () => {
+      calPopover.style.display = calPopover.style.display === 'block' ? 'none' : 'block';
+    });
+    document.querySelectorAll('.cal-day').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const day = btn.getAttribute('data-day');
+        const formatted = `2026-11-${day}`;
+        dateDisplay.value = formatted;
+        dateResult.textContent = `Fecha: ${formatted}`;
+        calPopover.style.display = 'none';
+      });
+    });
+
+    const volumeSlider = document.getElementById('rng-volume-slider');
+    const sliderResult = document.getElementById('lbl-slider-result');
+    volumeSlider.addEventListener('input', (e) => {
+      sliderResult.textContent = `Volumen: ${e.target.value}%`;
+    });
+
+    // 15. Wizard Multi-Step
+    const step1 = document.getElementById('step-1-content');
+    const step2 = document.getElementById('step-2-content');
+    const step3 = document.getElementById('step-3-content');
+    const tab1 = document.getElementById('tab-step-1');
+    const tab2 = document.getElementById('tab-step-2');
+    const tab3 = document.getElementById('tab-step-3');
+    const wizardRes = document.getElementById('lbl-wizard-result');
+
+    document.getElementById('btn-wizard-next-1').addEventListener('click', () => {
+      step1.style.display = 'none';
+      step2.style.display = 'block';
+      tab1.classList.remove('active');
+      tab2.classList.add('active');
+      wizardRes.textContent = 'Paso 2 / 3';
+    });
+    document.getElementById('btn-wizard-prev-2').addEventListener('click', () => {
+      step2.style.display = 'none';
+      step1.style.display = 'block';
+      tab2.classList.remove('active');
+      tab1.classList.add('active');
+      wizardRes.textContent = 'Paso 1 / 3';
+    });
+    document.getElementById('btn-wizard-next-2').addEventListener('click', () => {
+      const email = document.getElementById('inp-wizard-email').value;
+      const user = document.getElementById('inp-wizard-username').value;
+      step2.style.display = 'none';
+      step3.style.display = 'block';
+      tab2.classList.remove('active');
+      tab3.classList.add('active');
+      document.getElementById('lbl-wizard-summary').textContent = `Confirmar registro para: ${email} (${user})`;
+      wizardRes.textContent = 'Paso 3 / 3';
+    });
+    document.getElementById('btn-wizard-prev-3').addEventListener('click', () => {
+      step3.style.display = 'none';
+      step2.style.display = 'block';
+      tab3.classList.remove('active');
+      tab2.classList.add('active');
+      wizardRes.textContent = 'Paso 2 / 3';
+    });
+    document.getElementById('btn-wizard-finish').addEventListener('click', () => {
+      const email = document.getElementById('inp-wizard-email').value;
+      const user = document.getElementById('inp-wizard-username').value;
+      wizardRes.textContent = `Completado: ${email} (${user})`;
+      wizardRes.style.color = '#10b981';
+    });
+
+    // 16. Stale Element Simulation
+    const staleArea = document.getElementById('cnt-stale-container');
+    const staleResult = document.getElementById('lbl-stale-result');
+    const bindStaleClick = (btn) => {
+      btn.addEventListener('click', () => {
+        staleResult.textContent = 'Click exitoso en nodo';
+        staleResult.style.color = '#10b981';
+      });
+    };
+    bindStaleClick(document.getElementById('btn-stale-target'));
+
+    document.getElementById('btn-recreate-node').addEventListener('click', () => {
+      staleArea.innerHTML = '<span style="color: var(--accent-amber); font-size: 0.8rem;">Recreando nodo en DOM...</span>';
+      setTimeout(() => {
+        staleArea.innerHTML = '<button id="btn-stale-target" class="btn btn-primary">🎯 Click Nodo Volátil (Recreado)</button>';
+        bindStaleClick(document.getElementById('btn-stale-target'));
+        staleResult.textContent = 'Nodo recreado en DOM';
+      }, 400);
+    });
+
+    // 17. Descarga de Archivos
+    document.getElementById('lnk-download-csv').addEventListener('click', () => {
+      document.getElementById('lbl-download-status').textContent = 'Descarga iniciada (sample.csv)';
+    });
+
+    // 18. Clipboard & Keys
+    document.getElementById('btn-copy-clipboard').addEventListener('click', () => {
+      const val = document.getElementById('inp-copy-source').value;
+      navigator.clipboard.writeText(val).then(() => {
+        document.getElementById('lbl-clipboard-result').textContent = 'Copiado al portapapeles';
+      }).catch(() => {
+        document.getElementById('lbl-clipboard-result').textContent = 'Copiado manual fallback';
+      });
+    });
+
+    document.getElementById('btn-validate-token').addEventListener('click', () => {
+      const src = document.getElementById('inp-copy-source').value;
+      const dst = document.getElementById('inp-paste-target').value;
+      const res = document.getElementById('lbl-clipboard-result');
+      if (dst === src) {
+        res.textContent = 'Token verificado con éxito';
+        res.style.color = '#10b981';
+      } else {
+        res.textContent = 'Token no coincide';
+        res.style.color = '#ef4444';
+      }
+    });
+  </script>
+</body>
+</html>
+

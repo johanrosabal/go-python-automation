@@ -1,0 +1,3 @@
+@echo off
+echo 📊 Setting up your Allure Dashboards Server...
+.\allure-tool\allure-2.29.0\bin\allure.bat serve reports/allure-results

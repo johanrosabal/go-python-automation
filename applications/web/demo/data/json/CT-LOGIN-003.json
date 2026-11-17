@@ -1,0 +1,43 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-003",
+        "testCaseName": "test_dynamic_credentials_from_footer",
+        "title": "Login dynamically using credentials parsed directly from the page footer panel",
+        "description": "Login dynamically using credentials parsed directly from the page footer panel. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Happy Path & Session Lifecycle",
+        "story": "Dynamic Page Credential Login",
+        "severity": "Medium",
+        "priority": "P2",
+        "tag": [
+            "LOGIN",
+            "DYNAMIC",
+            "POSITIVE"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "Login page footer credentials panel is visible"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "user_index": 0
+        },
+        "expected": {
+            "inventory_title": "Products"
+        }
+    }
+}

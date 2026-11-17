@@ -1,0 +1,40 @@
+{
+    // --- Python Language Server ---
+    "python.languageServer": "Pylance",
+    "pyrefly.enable": false,
+
+    // --- Type Checking ---
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.extraPaths": [
+        "./"
+    ],
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "warning",
+        "reportMissingModuleSource": "none"
+    },
+
+    // --- Testing ---
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "applications",
+        "--alluredir=reports",
+        "--clean-alluredir"
+    ],
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "pythonTestExplorer.testFramework": "none",
+    "testExplorer.useNativeTesting": false,
+
+    // --- Terminal ---
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}"
+    },
+
+    // --- File Explorer ---
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true,
+        "**/reports": false
+    }
+}

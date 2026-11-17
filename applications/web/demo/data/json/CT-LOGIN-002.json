@@ -1,0 +1,46 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-002",
+        "testCaseName": "test_logout_returns_to_login_page",
+        "title": "Logout from Inventory returns user to Login Page with reset state",
+        "description": "Logout from Inventory returns user to Login Page with reset state. Verifies expected behavior against SauceDemo authentication service.",
+        "owner": "qa-team",
+        "epic": "Identity & Access Management",
+        "feature": "Happy Path & Session Lifecycle",
+        "story": "Session Termination",
+        "severity": "High",
+        "priority": "P1",
+        "tag": [
+            "LOGIN",
+            "LOGOUT",
+            "POSITIVE",
+            "SESSION"
+        ],
+        "execution": {
+            "enabled": true,
+            "environments": [
+                "dev",
+                "qa",
+                "uat",
+                "prod"
+            ],
+            "skip_reason": ""
+        },
+        "preconditions": [
+            "User is authenticated and on Inventory Page"
+        ],
+        "link": {
+            "url": "https://www.saucedemo.com",
+            "name": "SauceDemo Login"
+        },
+        "bugs": [],
+        "data": {
+            "username": "standard_user",
+            "password": "secret_sauce"
+        },
+        "expected": {
+            "expected_url_contains": "saucedemo.com",
+            "login_button_visible": true
+        }
+    }
+}

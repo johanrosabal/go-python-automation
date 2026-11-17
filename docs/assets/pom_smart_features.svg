@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 440" width="100%" height="auto" font-family="'Inter', 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <marker id="arrCyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrEmerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="440" rx="16" fill="url(#bg2)" stroke="#26334d" stroke-width="2"/>
+
+  <!-- ================================================================= -->
+  <!-- PANEL IZQUIERDO: CONTRATO DE CARGA (PAGE_PATH + anchor=True) -->
+  <!-- ================================================================= -->
+  <rect x="26" y="26" width="510" height="388" rx="12" fill="#131c2e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="46" y="58" fill="#38bdf8" font-size="16" font-weight="800">⚓ 1. Contrato de Carga (PAGE_PATH + anchor=True)</text>
+  <text x="46" y="78" fill="#94a3b8" font-size="12">Cómo BasePage sabe abrir y validar cualquier página sin código extra</text>
+
+  <!-- Step 1 Box -->
+  <rect x="46" y="96" width="470" height="82" rx="8" fill="#090d16" stroke="#1e3a5f"/>
+  <text x="60" y="116" fill="#fbbf24" font-size="11.5" font-weight="700">PASO 1: Declaración en el Page Object (Capa 1)</text>
+  <text x="60" y="138" fill="#7dd3fc" font-size="11.5" font-family="monospace">PAGE_PATH  = <tspan fill="#ce9178">"/inventory.html"</tspan></text>
+  <text x="60" y="158" fill="#7dd3fc" font-size="11.5" font-family="monospace">text_title = <tspan fill="#dcdcaa">find_by</tspan>(class_name=<tspan fill="#ce9178">"title"</tspan>, <tspan fill="#34d399" font-weight="700">anchor=True</tspan>)</text>
+
+  <line x1="281" y1="178" x2="281" y2="206" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Step 2 Box -->
+  <rect x="46" y="210" width="470" height="182" rx="8" fill="#090d16" stroke="#0284c7"/>
+  <text x="60" y="232" fill="#34d399" font-size="11.5" font-weight="700">PASO 2: Métodos Heredados Automáticamente de BasePage</text>
+
+  <rect x="60" y="246" width="442" height="36" rx="6" fill="#111827" stroke="#1e293b"/>
+  <text x="72" y="268" fill="#dcdcaa" font-size="11.5" font-family="monospace">page.open()             <tspan fill="#94a3b8">➔ Abre</tspan> <tspan fill="#ce9178">base_url + "/inventory.html"</tspan></text>
+
+  <rect x="60" y="292" width="442" height="36" rx="6" fill="#111827" stroke="#1e293b"/>
+  <text x="72" y="314" fill="#dcdcaa" font-size="11.5" font-family="monospace">page.is_loaded()        <tspan fill="#94a3b8">➔ Valida URL +</tspan> <tspan fill="#34d399">text_title.is_visible()</tspan></text>
+
+  <rect x="60" y="338" width="442" height="36" rx="6" fill="#111827" stroke="#1e293b"/>
+  <text x="72" y="360" fill="#dcdcaa" font-size="11.5" font-family="monospace">page.wait_until_loaded()<tspan fill="#94a3b8">➔ Espera URL +</tspan> <tspan fill="#34d399">text_title.wait_visible()</tspan></text>
+
+  <!-- ================================================================= -->
+  <!-- PANEL DERECHO: AUTO-LLENADO DESDE JSON (tests.data -> fill_form) -->
+  <!-- ================================================================= -->
+  <rect x="560" y="26" width="514" height="388" rx="12" fill="#131c2e" stroke="#34d399" stroke-width="1.5"/>
+  <text x="580" y="58" fill="#34d399" font-size="16" font-weight="800">🤖 2. Mapeo JSON (tests.data) ➔ Capa 2 (fill_form)</text>
+  <text x="580" y="78" fill="#94a3b8" font-size="12">self.get_data_for_test() extrae "tests.data" y fill_form invoca tus métodos C2</text>
+
+  <!-- JSON Box (Left inside Right Panel) -->
+  <rect x="580" y="96" width="218" height="222" rx="8" fill="#090d16" stroke="#fbbf24"/>
+  <text x="592" y="116" fill="#fbbf24" font-size="11" font-weight="700">📄 data/json/CT-001.json</text>
+  <text x="592" y="134" fill="#e2e8f0" font-size="10.5" font-family="monospace">{ <tspan fill="#c586c0">"tests"</tspan>: {</text>
+  <text x="602" y="150" fill="#64748b" font-size="10" font-family="monospace">"id": "CT-001", "title": "...",</text>
+  <text x="602" y="168" fill="#fbbf24" font-size="10.8" font-weight="700" font-family="monospace">"data": {</text>
+  <text x="614" y="190" fill="#9cdcfe" font-size="10.8" font-family="monospace">"fullname": <tspan fill="#ce9178">"Ana"</tspan>,</text>
+  <text x="614" y="216" fill="#9cdcfe" font-size="10.8" font-family="monospace">"country": <tspan fill="#ce9178">"CR"</tspan>,</text>
+  <text x="614" y="242" fill="#9cdcfe" font-size="10.8" font-family="monospace">"terms": <tspan fill="#569cd6">true</tspan>,</text>
+  <text x="614" y="268" fill="#9cdcfe" font-size="10.8" font-family="monospace">"invoice": <tspan fill="#ce9178">"a.pdf"</tspan>,</text>
+  <text x="614" y="290" fill="#64748b" font-size="10" font-family="monospace">"error_key": "messages..."</text>
+  <text x="602" y="306" fill="#fbbf24" font-size="10.5" font-family="monospace">} } }</text>
+
+  <!-- Mapping Arrows -->
+  <line x1="798" y1="186" x2="840" y2="186" stroke="#34d399" stroke-width="2" marker-end="url(#arrEmerald)"/>
+  <line x1="798" y1="212" x2="840" y2="212" stroke="#34d399" stroke-width="2" marker-end="url(#arrEmerald)"/>
+  <line x1="798" y1="238" x2="840" y2="238" stroke="#34d399" stroke-width="2" marker-end="url(#arrEmerald)"/>
+  <line x1="798" y1="264" x2="840" y2="264" stroke="#34d399" stroke-width="2" marker-end="url(#arrEmerald)"/>
+
+  <!-- Layer 2 Target Box -->
+  <rect x="844" y="96" width="210" height="222" rx="8" fill="#090d16" stroke="#34d399"/>
+  <text x="856" y="116" fill="#34d399" font-size="11" font-weight="700">⚡ Métodos Capa 2 Ejecutados</text>
+  <text x="856" y="190" fill="#dcdcaa" font-size="10.8" font-family="monospace">self.set_fullname(<tspan fill="#ce9178">"Ana"</tspan>)</text>
+  <text x="856" y="216" fill="#dcdcaa" font-size="10.8" font-family="monospace">self.select_country(<tspan fill="#ce9178">"CR"</tspan>)</text>
+  <text x="856" y="242" fill="#dcdcaa" font-size="10.8" font-family="monospace">self.check_terms()</text>
+  <text x="856" y="268" fill="#dcdcaa" font-size="10.8" font-family="monospace">self.upload_invoice(<tspan fill="#ce9178">"a.pdf"</tspan>)</text>
+  <text x="856" y="290" fill="#6a9955" font-size="10" font-family="monospace"># Ignorado (metadato)</text>
+
+  <!-- Bottom Callout in Right Panel -->
+  <rect x="580" y="330" width="474" height="64" rx="8" fill="#090d16" stroke="#581c87"/>
+  <text x="596" y="350" fill="#c084fc" font-size="11" font-weight="700">En el Test: self.get_data_for_test() extrae el nodo "tests.data":</text>
+  <text x="596" y="374" fill="#e2e8f0" font-size="11" font-family="monospace">test_data = <tspan fill="#569cd6">self</tspan>.<tspan fill="#dcdcaa">get_data_for_test</tspan>()  <tspan fill="#6a9955"># ➔ page.fill_form(test_data)</tspan></text>
+</svg>

@@ -1,0 +1,41 @@
+from typing import Self, Dict, Any
+from core.ui.common.base_page import BasePage
+from core.ui.common.base_component import component
+from core.ui.common.find_by import find_by
+import allure
+
+
+class {{ class_name }}(BasePage):
+    """
+    Page Object for {{ class_name }}.
+    """
+
+    # Optional relative route (used by .open(), .is_loaded(), and .wait_until_loaded())
+    # PAGE_PATH = "/example"
+
+    # 1. Layer 1 — Declarative Locators & Reusable Components
+    # input_search = find_by(id="search-input", label="Search Input", anchor=True)
+    # button_submit = find_by(id="submit-btn", label="Submit Button")
+    # button_dynamic_row = find_by(xpath="//tr[td='{item}']//button", label="Row Action '{item}'")
+    # sidebar = component(SidebarComponent)
+
+    # 2. Layer 2 — Granular Atomic Methods (Setters, Getters & Clicks)
+    # @allure.step("Setting search query: {value}")
+    # def set_search(self, value: str) -> Self:
+    #     self.input_search.send_keys(value)
+    #     return self
+    #
+    # def get_search(self) -> str:
+    #     return self.input_search.get_value()
+    #
+    # @allure.step("Clicking submit button")
+    # def click_submit(self) -> Self:
+    #     self.button_submit.click()
+    #     return self
+
+    # 3. Layer 3 — Composite Business / Form Methods (Orchestrate Layer-2 methods or fill_form)
+    # def submit_search_form(self, query: str) -> Self:
+    #     return self.set_search(query).click_submit()
+    #
+    # def submit_from_data(self, data: Dict[str, Any]) -> Self:
+    #     return self.fill_form(data).click_submit()

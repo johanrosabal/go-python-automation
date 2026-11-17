@@ -1,0 +1,68 @@
+# Standard Configuration File - PROD (SauceDemo)
+name: SauceDemo - Swag Labs (PROD)
+tms: https://tms.example.com/project/cases/
+web:
+  base_url: https://www.saucedemo.com/
+
+default:
+  browser: chrome
+
+# Role-Based Users Configuration
+users:
+  default_role: standard
+
+  roles:
+    standard:
+      username: standard_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "Standard e-commerce customer"
+
+    locked:
+      username: locked_out_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "Locked out user account"
+
+    problem:
+      username: problem_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "User with UI and broken image defects"
+
+    performance:
+      username: performance_glitch_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "User with simulated network/render latency"
+
+    error:
+      username: error_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "User with runtime JS and interaction errors"
+
+    visual:
+      username: visual_user
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "User with CSS and layout visual shifts"
+
+messages:
+  error_invalid: "Epic sadface: Username and password do not match any user in this service"
+  error_locked: "Epic sadface: Sorry, this user has been locked out."
+  error_username_required: "Epic sadface: Username is required"
+  error_password_required: "Epic sadface: Password is required"
+
+# Multi-Database Connections Configuration
+databases:
+  default_connection: primary
+
+  connections:
+    primary:
+      engine: sqlite
+      database: "resources/data/test_prod.db"
+      description: "Primary local SQLite database for PROD"
+
+    orders_db:
+      engine: postgresql
+      host: "${ORDERS_DB_HOST:localhost}"
+      port: 5432
+      database: orders_prod
+      username: prod_reader
+      password: "b64:c2VjcmV0X3NhdWNl"
+      description: "Orders microservice PostgreSQL database (PROD)"
