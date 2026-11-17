@@ -6,7 +6,7 @@ web:
 
 # Additional configurations for restricted networks
 browser:
-  edge_path: "C:/ai/go-python-selenium-automation/resources/drivers/msedgedriver.exe"
+  edge_path: "C:/ai/go-python-automation/resources/drivers/msedgedriver.exe"
 
 default:
   browser: chrome
