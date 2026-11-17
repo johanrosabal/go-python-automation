@@ -10,6 +10,7 @@ Pillow
 axe-selenium-python
 sqlalchemy
 requests
+flask
 openpyxl
 faker
 playwright>=1.40.0

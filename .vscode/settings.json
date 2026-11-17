@@ -18,13 +18,11 @@
     // --- Testing ---
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
-        "applications",
-        "--alluredir=reports",
-        "--clean-alluredir"
+        "applications/web/demo/tests"
     ],
     "python.testing.autoTestDiscoverOnSaveEnabled": true,
-    "pythonTestExplorer.testFramework": "none",
-    "testExplorer.useNativeTesting": false,
+    "pythonTestExplorer.testFramework": "pytest",
+    "testExplorer.useNativeTesting": true,
 
     // --- Terminal ---
     "terminal.integrated.env.windows": {

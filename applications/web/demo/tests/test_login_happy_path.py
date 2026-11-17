@@ -2,6 +2,7 @@ import pytest
 import allure
 from core.ui.common.base_test import BaseTest
 from core.utils.decorators import test_case
+from applications.web.demo.app.demo_app import DemoApp
 from applications.web.demo.utils.decorators import demo
 
 
@@ -10,6 +11,8 @@ class TestLoginHappyPath(BaseTest):
     """
     Test Suite for SauceDemo Login Happy Path & Session Lifecycle.
     """
+
+    app: DemoApp
 
     @test_case(id="CT-LOGIN-001")
     def test_valid_login_standard_user(self):
