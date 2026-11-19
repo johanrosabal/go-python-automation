@@ -26,6 +26,12 @@ A professional-grade, high-performance automation framework built for scalabilit
 - **Git**: For version control.
 - **Chrome/Edge/Firefox**: Browser installed.
 
+Selenium uses its native Selenium Manager to resolve local drivers and download missing
+ones when needed. Its default cache is `%USERPROFILE%\.cache\selenium` on Windows.
+For restricted networks, configure an authorized local driver executable using
+`browser.chrome_path`, `browser.firefox_path`, or `browser.edge_path` in the environment
+YAML. New downloads still require corporate network access; Selenium Grid is unchanged.
+
 ### 2. Clone and Configure
 ```bash
 git clone https://github.com/your-username/python-selenium-automation.git

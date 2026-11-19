@@ -1,8 +1,7 @@
-selenium
+selenium>=4.6.0
 pytest
 allure-pytest
 pytest-xdist
-webdriver-manager
 pyyaml
 opencv-python
 mss

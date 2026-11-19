@@ -7,6 +7,6 @@ def demo(cls):
     Wraps the core project_config decorator to maintain backwards compatibility.
     """
     cls.profile = "qa"
-    cls.browser = "chrome"
+    cls.browser = "edge"
     return project_config(app_name="demo", app_class=DemoApp)(cls)
 

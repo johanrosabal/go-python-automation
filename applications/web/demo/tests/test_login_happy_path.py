@@ -26,6 +26,7 @@ class TestLoginHappyPath(BaseTest):
 
         with allure.step("1. Navigate to Login Page and verify load state"):
             login_page = self.app.login_page.open()
+
             assert login_page.is_loaded(), "Login page failed to load anchor elements"
 
         with allure.step(f"2. Submit credentials for role '{role}' ({username})"):

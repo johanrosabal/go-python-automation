@@ -1,24 +1,14 @@
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-import logging
-logging.getLogger("WDM").setLevel(logging.WARNING)
-
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.edge.service import Service as EdgeService
-import allure
 
 class DriverManager:
     """
     Factory class to manage WebDriver instances for different browsers.
 
     This class centralizes the creation and configuration of WebDrivers, 
-    supporting Chrome, Firefox, and Edge via webdriver-manager.
+    supporting Chrome, Firefox, and Edge via Selenium Manager or local drivers.
     """
     @staticmethod
     def get_driver(browser_name: str = "chrome", headless: bool = False):
@@ -39,7 +29,6 @@ class DriverManager:
         if proxy_http or proxy_https:
             os.environ['HTTP_PROXY'] = proxy_http if proxy_http else ""
             os.environ['HTTPS_PROXY'] = proxy_https if proxy_https else ""
-            os.environ['WDM_SSL_VERIFY'] = '0'
 
         remote_url = ConfigManager.get("remote.url")
         enable_video = ConfigManager.get("remote.enable_video") or False
@@ -79,14 +68,13 @@ class DriverManager:
                 if chrome_path and os.path.exists(chrome_path):
                     service = ChromeService(executable_path=chrome_path)
                 else:
-                    os.environ['WDM_SSL_VERIFY'] = '0'
-                    service = ChromeService(ChromeDriverManager().install())
+                    service = ChromeService()
                 return webdriver.Chrome(service=service, options=options)
             except Exception as e:
                 raise ConnectionError(
                     f"Failed to initialize Chrome driver. Error: {e}. "
-                    "Hint: Check your internet connection, proxy settings, or local_path in config."
-                )
+                    "Hint: Check Selenium Manager connectivity, proxy settings, or browser.chrome_path in config."
+                ) from e
 
         elif browser_name == "firefox":
             options = webdriver.FirefoxOptions()
@@ -109,13 +97,13 @@ class DriverManager:
                 if firefox_path and os.path.exists(firefox_path):
                     service = FirefoxService(executable_path=firefox_path)
                 else:
-                    service = FirefoxService(GeckoDriverManager().install())
+                    service = FirefoxService()
                 return webdriver.Firefox(service=service, options=options)
             except Exception as e:
                 raise ConnectionError(
                     f"Failed to initialize Firefox driver. Error: {e}. "
-                    "Hint: Check your internet connection, proxy settings, or local_path in config."
-                )
+                    "Hint: Check Selenium Manager connectivity, proxy settings, or browser.firefox_path in config."
+                ) from e
 
         elif browser_name == "edge":
             options = webdriver.EdgeOptions()
@@ -148,13 +136,13 @@ class DriverManager:
                 if edge_path and os.path.exists(edge_path):
                     service = EdgeService(executable_path=edge_path)
                 else:
-                    service = EdgeService(EdgeChromiumDriverManager().install())
+                    service = EdgeService()
                 return webdriver.Edge(service=service, options=options)
             except Exception as e:
                 raise ConnectionError(
                     f"Failed to initialize Edge driver. Error: {e}. "
-                    "Hint: Check your internet connection, proxy settings, or local_path in config."
-                )
+                    "Hint: Check Selenium Manager connectivity, proxy settings, or browser.edge_path in config."
+                ) from e
 
         else:
             raise ValueError(f"Browser '{browser_name}' is not supported. Choose from: chrome, firefox, edge.")

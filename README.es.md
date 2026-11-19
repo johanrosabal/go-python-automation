@@ -28,6 +28,13 @@ Sigue estos pasos para configurar tu entorno de desarrollo en minutos:
 - **Git**: Para gestión de versiones.
 - **Chrome/Edge/Firefox**: Navegador instalado.
 
+Selenium utiliza Selenium Manager nativo para resolver drivers locales y descargar los
+faltantes cuando sea necesario. En Windows, su caché predeterminada es
+`%USERPROFILE%\.cache\selenium`. En redes restringidas, configura un ejecutable de driver
+local autorizado mediante `browser.chrome_path`, `browser.firefox_path` o
+`browser.edge_path` en el YAML del ambiente. Las descargas nuevas siguen requiriendo
+acceso permitido por la red corporativa; Selenium Grid no cambia.
+
 ### 2. Clonar y Configurar
 ```bash
 git clone https://github.com/tu-usuario/python-selenium-automation.git
